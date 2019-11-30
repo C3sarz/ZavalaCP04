@@ -43,6 +43,7 @@ int SecondaryPrompts(int type, int data) {
         getchar();
         return result;
     }
+    else if (type == 6) printf("The tree is empty!\n");
 }
 
 

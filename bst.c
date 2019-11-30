@@ -77,8 +77,10 @@ void Traversal(Tree *root) {
 }
 
 void ReleaseAllNodes(Tree *root) {
-    if (root->RightNode != NULL) ReleaseAllNodes(root->RightNode);
-    if (root->LeftNode != NULL) ReleaseAllNodes(root->LeftNode);
+    if(root != NULL) {
+        if (root->RightNode != NULL) ReleaseAllNodes(root->RightNode);
+        if (root->LeftNode != NULL) ReleaseAllNodes(root->LeftNode);
+    }
     free(root);
 }
 
@@ -92,27 +94,33 @@ int Prompt(Tree **BinaryTree) {
             break;
 
         case 's':
-            data = SecondaryPrompts(2, 0);
-
-            int status = Search(*BinaryTree, data);
-            if (status == 1) SecondaryPrompts(3, data);
-            else SecondaryPrompts(4, data);
+            if(*BinaryTree != NULL)
+            {
+                data = SecondaryPrompts(2, 0);
+                int status = Search(*BinaryTree, data);
+                if (status == 1) SecondaryPrompts(3, data);
+                else SecondaryPrompts(4, data);
+            }
+            else SecondaryPrompts(6,0);
             break;
 
         case 't':
-            Traversal(*BinaryTree);
+            if(*BinaryTree != NULL)Traversal(*BinaryTree);
+            else SecondaryPrompts(6,0);
             printf("\n");
             break;
 
         case 'q':
             ReleaseAllNodes(*BinaryTree);
             return 1;
-            break;
 
         case 'd':
-            data = SecondaryPrompts(5,0);
-            if(Search(*BinaryTree, data)) Delete(BinaryTree,data);
-            else SecondaryPrompts(4,data);
+            if(*BinaryTree != NULL) {
+                data = SecondaryPrompts(5, 0);
+                if (Search(*BinaryTree, data)) Delete(BinaryTree, data);
+                else SecondaryPrompts(4, data);
+            }
+            else SecondaryPrompts(6,0);
             break;
 
         default:

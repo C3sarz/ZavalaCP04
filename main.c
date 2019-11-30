@@ -9,7 +9,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "bst.h"
-#define DEBUG 1
+#define DEBUG 0
 
 /**********************************************
 * Description: * Main function.
