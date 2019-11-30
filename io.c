@@ -11,7 +11,7 @@
 #include <stdlib.h>
 
 char DisplayMainPrompt() {
-    printf("Enter (i)nstert, (s)earch, inorder (t)raversal, or (q)uit: ");
+    printf("Enter (i)nstert, (s)earch, inorder (t)raversal, (d)elete, or (q)uit: ");
     char input[20];
     scanf("%s", input);
     return input[0];
@@ -24,15 +24,24 @@ int SecondaryPrompts(int type, int data) {
         scanf("%d", &result);
         getchar();
         return result;
-    } else if (type == 2) {
+    }
+    else if (type == 2) {
         printf("\nEnter a number to search:");
         scanf("%d", &result);
         getchar();
         return result;
-    } else if (type == 3) {
+    }
+    else if (type == 3) {
         printf("%d is in the tree\n", data);
-    } else if (type == 4) {
+    }
+    else if (type == 4) {
         printf("%d is NOT in the tree\n", data);
+    }
+    else if (type == 5) {
+        printf("\nEnter a number to delete: ");
+        scanf("%d", &result);
+        getchar();
+        return result;
     }
 }
 

@@ -30,6 +30,6 @@ void ReleaseAllNodes(Tree *root);
 
 int Prompt(Tree **BinaryTree);
 
-void Delete(Tree *root, int data);
+int Delete(Tree **root, int data);
 
 #endif //ZAVALACP02_IO_H

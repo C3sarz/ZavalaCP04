@@ -9,12 +9,7 @@
 #include "io.h"
 #include <stdio.h>
 #include <stdlib.h>
-//typedef struct node{
-//    int key;
-//    struct node * LeftNode;
-//    struct node * RightNode;
-//}Tree;
-
+#define DEBUG 1
 
 void Initialize(struct node *root, int data) {
     root->key = data;
@@ -116,6 +111,11 @@ int Prompt(Tree **BinaryTree) {
             return 1;
             break;
 
+        case 'd':
+            data = SecondaryPrompts(5,0);
+            if(!Delete(BinaryTree,data)) SecondaryPrompts(4,data);
+            break;
+
         default:
             return 0;
 
@@ -123,7 +123,105 @@ int Prompt(Tree **BinaryTree) {
     return 0;
 }
 
-void Delete(Tree *root, int data)
+int Delete(Tree **root, int data)
 {
+Tree * current = malloc(sizeof(Tree));
+Tree * prev = malloc(sizeof(Tree));
+if(!Search(*root,data)) return 0;    ///Checks if value exists
 
+/// NAVIGATION START
+char lastMov;
+int atPosition = 0;
+if(data < (*root)->key) //Initial setup (LN)
+    {
+    prev = *root;
+    current = (*root)->LeftNode;
+    lastMov = 'l';
+    }
+else if(data > (*root)->key) //Initial setup (RN)
+{
+    prev = *root;
+    current = (*root)->RightNode;
+    lastMov = 'r';
 }
+
+else {
+    current = *root;
+    lastMov = 'n';
+}
+
+while(!atPosition)
+    {
+    if(current->key == data) atPosition = 1;
+    else
+        {
+            if(data < current->key) ///Left Navigation
+            {
+                prev = current;
+                current = current->LeftNode;
+                lastMov = 'l';
+            }
+            else if(data > current->key) ///Right Navigation
+            {
+                prev = current;
+                current = current->RightNode;
+                lastMov = 'r';
+            }
+        }
+    }
+
+if(DEBUG) printf("Deleted: %d\n",current->key);   ///DEBUG
+
+/// NAVIGATION END
+
+/// CASE 1 (NO CHILDREN)
+if(current->LeftNode == NULL && current->RightNode == NULL)
+{
+    if(lastMov == 'l'){
+        prev->LeftNode = NULL;
+    }
+    else if(lastMov == 'r'){
+        prev->RightNode = NULL;
+    }
+    else if(prev == NULL){
+        *root = NULL;
+    }
+    free(current);
+    return 1;
+}
+/// -CASE 1-
+
+/// CASE 2 (ONE CHILD)
+else if( (current->LeftNode == NULL && current->RightNode != NULL) || (current->LeftNode != NULL && current->RightNode == NULL))
+{
+    if(current->LeftNode != NULL && current->RightNode == NULL){    ///Left exists
+        if(lastMov == 'l'){
+            prev->LeftNode = current->LeftNode;
+        }
+        else if(lastMov == 'r'){
+            prev->RightNode = current->LeftNode;
+        }
+    }
+
+    else if(current->LeftNode == NULL && current->RightNode != NULL){   ///Right exists
+        if(lastMov == 'l'){
+            prev->LeftNode = current->RightNode;
+        }
+        else if(lastMov == 'r'){
+            prev->RightNode = current->RightNode;
+        }
+    }
+
+    free(current);
+    return 1;
+}
+/// -CASE 2-
+
+/// CASE 3 (TWO CHILDREN)
+
+
+
+/// -CASE 3-
+
+return 0;
+}//end Delete

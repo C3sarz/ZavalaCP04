@@ -9,6 +9,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "bst.h"
+#define DEBUG 1
 
 /**********************************************
 * Description: * Main function.
@@ -20,11 +21,25 @@ int main() {
     BinaryTree = malloc(sizeof(struct node));
     BinaryTree = NULL;
 
+    ///DEBUG
+if (DEBUG)
+{
+    Insert(&BinaryTree, 20);
+    Insert(&BinaryTree, 30);
+    Insert(&BinaryTree, 25);
+    Insert(&BinaryTree, 10);
+    Insert(&BinaryTree, 12);
+    Insert(&BinaryTree, 7);
+    Insert(&BinaryTree, 3);
+    Insert(&BinaryTree, 8);
+}
+    ///DEBUG
+
     ////START MAIN LOOP
     int escape = 0;
     while (escape == 0) {
         escape = Prompt(&BinaryTree);
     }
     ////END MAIN LOOP
-    return 0;
+    return 33;
 }
