@@ -9,7 +9,6 @@
 #include "io.h"
 #include <stdio.h>
 #include <stdlib.h>
-#define DEBUG 1
 
 void Initialize(struct node *root, int data) {
     root->key = data;
@@ -101,7 +100,6 @@ int Prompt(Tree **BinaryTree) {
             break;
 
         case 't':
-            printf("\n");
             Traversal(*BinaryTree);
             printf("\n");
             break;
@@ -113,7 +111,8 @@ int Prompt(Tree **BinaryTree) {
 
         case 'd':
             data = SecondaryPrompts(5,0);
-            if(!Delete(BinaryTree,data)) SecondaryPrompts(4,data);
+            if(Search(*BinaryTree, data)) Delete(BinaryTree,data);
+            else SecondaryPrompts(4,data);
             break;
 
         default:
@@ -127,7 +126,7 @@ int Delete(Tree **root, int data)
 {
 Tree * current = malloc(sizeof(Tree));
 Tree * prev = malloc(sizeof(Tree));
-if(!Search(*root,data)) return 0;    ///Checks if value exists
+prev = NULL;
 
 /// NAVIGATION START
 char lastMov;
@@ -169,8 +168,6 @@ while(!atPosition)
             }
         }
     }
-
-if(DEBUG) printf("Deleted: %d\n",current->key);   ///DEBUG
 
 /// NAVIGATION END
 
@@ -218,9 +215,19 @@ else if( (current->LeftNode == NULL && current->RightNode != NULL) || (current->
 /// -CASE 2-
 
 /// CASE 3 (TWO CHILDREN)
+else if(current->LeftNode != NULL && current->RightNode != NULL)
+{
+    Tree * minNode = malloc(sizeof(Tree));
+    minNode = current->RightNode;
+    while(minNode->LeftNode != NULL)  //Finding minimum value node of the right subtree.
+    {
+        minNode = minNode->LeftNode;
+    }
+    current->key = minNode->key;
+    Delete(&(current->RightNode),minNode->key);
 
 
-
+}
 /// -CASE 3-
 
 return 0;

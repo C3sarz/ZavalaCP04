@@ -24,14 +24,15 @@ int main() {
     ///DEBUG
 if (DEBUG)
 {
-    Insert(&BinaryTree, 20);
-    Insert(&BinaryTree, 30);
-    Insert(&BinaryTree, 25);
-    Insert(&BinaryTree, 10);
+    Insert(&BinaryTree, 5);
+    Insert(&BinaryTree, 2);
     Insert(&BinaryTree, 12);
-    Insert(&BinaryTree, 7);
+    Insert(&BinaryTree, -4);
     Insert(&BinaryTree, 3);
-    Insert(&BinaryTree, 8);
+    Insert(&BinaryTree, 9);
+    Insert(&BinaryTree, 21);
+    Insert(&BinaryTree, 19);
+    Insert(&BinaryTree, 25);
 }
     ///DEBUG
 
